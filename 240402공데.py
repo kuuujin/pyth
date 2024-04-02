@@ -82,3 +82,7 @@ def main():
     ed_cd = "E" #E : 방한외래관광객, D : 해외 출국
     jsonResult, result, natName, ed, dataEND = getTourismStatsService(nat_cd, ed_cd, nStartYear, nEndYear) #[CODE 3]
     
+    with open('./%s_%s_%d_%s.json ' % (natName , ed, nStartYear , dataEND)'w’, encoding = 'utf8') as outfile:
+        jsonFile = json.dumps jsonResult , indent = 4, sort_keys = True, ensure_ascii = False)
+        outfile.write(jsonFile)
+
