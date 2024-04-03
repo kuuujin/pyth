@@ -6,7 +6,7 @@ import time
 import json
 import pandas as pd
 
-ServiceKey = "G7F7Ruuf%2FEDOr3554CaXdPFHFET05xD60%2BU1UxbiTVNHKlfheYNRrRwqcazpXFG%2BOR8aw1jW%2BC9HzH2wuUJdng%3D%3D"
+ServiceKey = "vcA1dWB7HEDBWqbtJBAwgr7MytBQ8J8L0qSC204UTSeMeGo%2BjiQuraMxLRWG0y6ObD13pbTl8uk3g4Ua3dEcEQ%3D%3D"
 
 #[CODE 1]
 def getRequestUrl(url):
@@ -81,4 +81,14 @@ def main():
     nEndYear = int(input('데이터를 몇 년까지 수집할까요? : '))
     ed_cd = "E" #E : 방한외래관광객, D : 해외 출국
     jsonResult, result, natName, ed, dataEND = getTourismStatsService(nat_cd, ed_cd, nStartYear, nEndYear) #[CODE 3]
+
+    with open('./%s_%s_%d_%s.json' % (natName , ed, nStartYear , dataEND), 'w', encoding = 'utf8') as outfile:
+        jsonFile = json.dumps(jsonResult , indent = 4, sort_keys = True, ensure_ascii = False)
+        outfile.write(jsonFile)
     
+    columns = ["입국자국가", "국가코드", "입국연월 ", "입국자 수"]
+    result_df= pd.DataFrame(result, columns = columns)
+    result_df.to_csv('./%s_%s_%d_%s.csv' % (natName, ed, nStartYear, dataEND), index=False, encoding='cp949')
+
+if __name__ == '__main__':
+    main()
