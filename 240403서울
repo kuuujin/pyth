@@ -22,21 +22,41 @@ def getRequestUrl(url):
         return None
     
 #[CODE 2]
-def getPage(yyyymm, national_code, ed_cd):
+def getPage(type, start_index, end_index):
     service_url = "http://openAPI.seoul.go.kr:8088/"
     
-    parameters = ServiceKey #인증키
-    parameters += "&YM=" + yyyymm
-    parameters += "&NAT_CD=" + national_code
-    parameters += "&ED_CD=" + ed_cd
+    parameters = ServiceKey
+    parameters += "/" + type
+    parameters += "ChunmanFreeSuggestions/"
+    parameters += "/" + start_index
+    parameters += "/" + end_index 
     url = service_url + parameters
-    print(url) #액세스 거부 여부 확인용 출력
+    print(url)
     retData = getRequestUrl(url) #[CODE 1]
 
     if (retData == None):
         return None
     else:
         return json.loads(retData)
+
+#[CODE 3]    
+def getItemAll(type, start_index, end_index):
+    jsonResult = []
+    result = []
+
+    jsonData = getPage(type, start_index, end_index)
+    
+
+def main():
+    jsonResult = []
+    result = []
+
+    print("<< 상상대로 서울 자유제안 정보 데이터를 수집합니다 >>")
+    type = input('어떤 형태의 파일 타입으로 가져올까요?(xml: xml / xml파일: xmlf / 엑셀파일: xls / json파일: json) :')
+    start_index = int(input('수집을 시작하려는 페이지 번호를 입력해 주세요 : '))
+    end_index = int(input('수집을 끝내려는 페이지 번호를 입력해 주세요 : '))
+
+
 
 
 if __name__ == '__main__':
