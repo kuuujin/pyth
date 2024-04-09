@@ -64,7 +64,7 @@ def main():
     result = getItemAll()
     columns = ['SN', 'TITLE', 'CONTENT_link', 'VOTE_SCORE', 'DATE']
     result_df = pd.DataFrame(result, columns= columns)
-    result_df.to_csv('/상상대로서울자유제안.csv', index=False, encoding='cp949')
+    result_df.to_csv('상상대로서울자유제안.csv', index=False, encoding='cp949')
 
 if __name__ == '__main__':
     main()
