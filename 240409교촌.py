@@ -1,8 +1,9 @@
 from bs4 import BeautifulSoup
 import urllib.request
 import datetime
-import json
 import pandas as pd
+from itertools import count
+
 
 
 #[CODE 1]
@@ -55,35 +56,16 @@ def cswin_Kyochon():
     
     result = []
 
-    for i in range(1000//5):
-        jsonData = getPage(i*5 +1)
-        if(jsonData['ChunmanFreeSuggestions']['RESULT']['CODE'] == 'INFO-100'):
-            print('인증키 오류')
-            return
-    
-        if(jsonData['ChunmanFreeSuggestions']['RESULT']['CODE'] == 'INFO-000'):
-            for i in range(5):
-                SN = jsonData['ChunmanFreeSuggestions']['row'][i]['SN']
-                TITLE = jsonData['ChunmanFreeSuggestions']['row'][i]['TITLE']
-                CONTENT_link = jsonData['ChunmanFreeSuggestions']['row'][i]['CONTENT']
-                VOTE_SCORE = jsonData['ChunmanFreeSuggestions']['row'][i]['VOTE_SCORE']
-                DATE = jsonData['ChunmanFreeSuggestions']['row'][i]['REG_DATE']
-                result.append([SN, TITLE, CONTENT_link, VOTE_SCORE, DATE])
-    
-    print('총 건수 : %s' %jsonData['ChunmanFreeSuggestions']['list_total_count'])
-    return result
+    print('교촌 주소 크롤링')
+    getKyochonAddress(result)
+
+    kyochon_table = pd.DataFrame(result, columns=('store', 'sido_gungu', 'store_address', 'store_phone'))
+    kyochon_table.to_csv("kyochon.csv",encoding='cp949', mode='w', index=True)
+    del result[:]
+
+    print('끝')
     
 
-def main():
-    jsonResult = []
-    result = []
-
-    print("<< 상상대로 서울 자유제안 정보 데이터를 수집합니다 >>")
-    
-    result = getItemAll()
-    columns = ['SN', 'TITLE', 'CONTENT_link', 'VOTE_SCORE', 'DATE']
-    result_df = pd.DataFrame(result, columns= columns)
-    result_df.to_csv('상상대로서울자유제안.csv', index=False, encoding='cp949')
 
 if __name__ == '__main__':
-    main()
+    cswin_Kyochon()
