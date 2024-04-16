@@ -29,7 +29,7 @@ def getRequestUrl(url, enc='utf-8'):
 def getKyochonAddress(result):
 
     for sido1 in range(1, 18):
-        for sido2 in count():
+        for sido2 in count(1):
             Kyochon_URL = 'https://www.kyochon.com/shop/domestic.asp?sido1=%s&sido2=%s&txtsearch=' %(str(sido1), str(sido2))
             print(Kyochon_URL)
 
