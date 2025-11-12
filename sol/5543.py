@@ -1,0 +1,8 @@
+up_burger = int(input())
+middle_burger = int(input())
+down_burger = int(input())
+cola = int(input())
+cider = int(input())
+min_burger = min(up_burger,middle_burger,down_burger)
+min_drink = min(cola,cider)
+print(min_burger + min_drink - 50)

@@ -10,6 +10,6 @@ if m>=60:
     i,j = divmod(m,60)
     h +=i
     m = j
-if h>=24:
-    h -=24
+h = h %24
+
 print(h,m,s)
